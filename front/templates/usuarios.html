@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="flex h-screen bg-gray-900">
+    <!-- Sidebar Completo -->
+    <div class="w-64 bg-gray-900 text-white p-4 border-r border-gray-700">
+        <!-- Sección de Gestión de Usuarios (movida arriba) -->
+        <div class="mb-8">
+            <h3 class="text-lg font-semibold mb-2 text-blue-400">Gestión de Usuarios</h3>
+            <ul class="space-y-2">
+                <li>
+                    <button onclick="toggleModule('usuarios')" class="w-full flex items-center text-gray-300 hover:text-blue-300 px-2 py-2 rounded hover:bg-gray-800 transition-colors">
+                        <svg class="w-5 h-5 mr-2 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                        </svg>
+                        <span class="mr-2 text-blue-400">• Usuarios</span>
+                    </button>
+                </li>
+                
+            </ul>
+        </div>
+
+        <!-- Línea divisoria -->
+        <hr class="border-gray-700 my-4">
+
+        <!-- Sección de Constancias -->
+        <div class="mb-8">
+            <h3 class="text-lg font-semibold mb-2 text-blue-400">Constancias</h3>
+            <ul class="space-y-2">
+                <li>
+                    <button onclick="toggleModule('idcif')" class="w-full flex items-center text-gray-300 hover:text-blue-300 px-2 py-2 rounded hover:bg-gray-800 transition-colors">
+                        <span class="mr-2 text-blue-400">• Constancias (IDCIF)</span> 
+                    </button>
+                </li>
+                <li>
+                    <button onclick="toggleModule('clon')" class="w-full flex items-center text-gray-300 hover:text-blue-300 px-2 py-2 rounded hover:bg-gray-800 transition-colors">
+                        <span class="mr-2 text-blue-400">• Constancias (Clon)</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Línea divisoria -->
+        <hr class="border-gray-700 my-4">
+
+        <!-- Opción de Cerrar Sesión -->
+        <div>
+            <ul class="space-y-2">
+                <li>
+                    <a href="{{ url_for('logout') }}" class="flex items-center text-gray-300 hover:text-blue-300 px-2 py-2 rounded hover:bg-gray-800 transition-colors">
+                        <svg class="w-5 h-5 mr-2 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                        </svg>
+                        Cerrar Sesión
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="flex-1 overflow-auto p-8 bg-gray-800">
+    <!-- Módulo IDCIF -->
+    {% include 'constancias/idcif.html' %}
+    
+    <!-- Módulo Clon -->
+    {% include 'constancias/clon.html' %}
+    
+    <!-- Módulo Usuarios (que ahora muestra gestion_usuarios.html) -->
+    <div id="usuariosModule" class="hidden bg-gray-700 rounded-lg shadow-lg p-6 mb-8 max-w-4xl mx-auto border border-gray-600">
+        {% include 'gestion_usuarios.html' %}
+    </div>
+    
+    <!-- Contenido principal -->
+    <div id="mainContent" class="text-gray-300">
+        <h1 class="text-3xl font-bold mb-6 text-blue-300">Bienvenido al Sistema</h1>
+        <p class="text-lg">Selecciona una opción del menú lateral</p>
+    </div>
+</div>
+
+
+
+</div>
+
+<script>
+function toggleModule(moduleName) {
+    // Ocultar todos los módulos y mostrar el principal primero
+    document.getElementById('idcifModule').classList.add('hidden');
+    document.getElementById('clonModule').classList.add('hidden');
+    document.getElementById('usuariosModule').classList.add('hidden');
+    document.getElementById('mainContent').classList.add('hidden');
+    
+    // Mostrar el módulo seleccionado
+    if(moduleName === 'idcif') {
+        document.getElementById('idcifModule').classList.remove('hidden');
+    } else if(moduleName === 'clon') {
+        document.getElementById('clonModule').classList.remove('hidden');
+    } else if(moduleName === 'usuarios') {
+        document.getElementById('usuariosModule').classList.remove('hidden');
+    } else {
+        document.getElementById('mainContent').classList.remove('hidden');
+    }
+}
+</script>
+{% endblock %}

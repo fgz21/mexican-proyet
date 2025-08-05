@@ -1,0 +1,28 @@
+<div id="clonModule" class="hidden bg-gray-700 rounded-lg shadow-lg p-6 mb-8 max-w-2xl mx-auto border border-gray-600">
+    <h2 class="text-2xl font-bold mb-4 text-center text-blue-300">(Clon)</h2>
+    
+    <form method="POST" action="/ruta_clon">
+        <div class="mb-6">
+            <h3 class="text-xl font-semibold mb-6 text-center text-blue-200">¡Bienvenido!</h3>
+            
+            <div class="grid grid-cols-1 gap-4 mb-6">
+                <div>
+                    <label class="block text-gray-300 mb-1">CURP:</label>
+                    <input type="text" name="curp" class="w-full px-3 py-2 bg-gray-600 border border-gray-500 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent">
+                </div>
+                
+                <div>
+                    <label class="block text-gray-300 mb-1"></label>
+                    <!-- Incluye el select de lugares de emisión existente -->
+                    {% include 'partials/lugares_emision_select.html' %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="flex justify-center mt-6">
+            <button type="submit" class="bg-blue-600 text-white px-8 py-3 rounded-md transition-colors text-lg font-medium hover:bg-blue-700">
+                Enviar
+            </button>
+        </div>
+    </form>
+</div>
