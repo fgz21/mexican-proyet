@@ -8,16 +8,16 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div>
                     <label class="block text-gray-300 mb-1">RFC:</label>
-                    <input type="text" name="rfc" 
+                    <input type="text" name="id_cif" 
                            class="w-full px-3 py-2 bg-gray-600 border border-gray-500 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
                            pattern="[A-ZÑ&]{3,4}\d{6}[A-V1-9][A-Z1-9][0-9A]" 
-                           title="Formato de RFC inválido (ej. ABCD123456XYZ)" required>
+                           title="Formato de RFC inválido (ej. ABCD123456XYZ)" >
                 </div>
                 <div>
                     <label class="block text-gray-300 mb-1">ID CIF:</label>
                     <input type="text" name="id_cif" 
                            class="w-full px-3 py-2 bg-gray-600 border border-gray-500 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
-                           required>
+                           >
                 </div>
             </div>
             
@@ -27,25 +27,32 @@
             <!-- Sección de Actividad -->
             <div class="mb-6 bg-gray-600 p-4 rounded-lg border border-gray-500">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div>
+                     <div>
                         <label class="block text-gray-300 mb-1">Actividad Económica</label>
-                        <select name="actividad" class="w-full px-3 py-2 bg-gray-700 border border-gray-500 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-400" required>
-                            <option value="Asalariado">Asalariado</option>
-                            <option value="Honorarios">Honorarios</option>
-                            <option value="Actividades Empresariales">Actividades Empresariales</option>
-                        </select>
+                        <input type="text" name="actividad" 
+                               class="w-full px-3 py-2 bg-gray-700 border border-gray-500 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+                               placeholder="Ej. Comercio al por menor"
+                               >
                     </div>
+
+                     <div>
+                        <label class="block text-gray-300 mb-1">Fecha de Nacimiento:</label>
+                        <input type="date" name="fecha_nacimiento" 
+                               class="w-full px-3 py-2 bg-gray-700 border border-gray-500 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    </div>
+
+                    
                     <div>
                         <label class="block text-gray-300 mb-1">Porcentaje:</label>
                         <input type="number" name="porcentaje" min="1" max="100" 
                                class="w-full px-3 py-2 bg-gray-700 border border-gray-500 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
-                               value="100" required>
+                               value="100" >
                     </div>
                     <div>
                         <label class="block text-gray-300 mb-1">Fecha de Inicio:</label>
                         <input type="date" name="fecha_inicio" 
                                class="w-full px-3 py-2 bg-gray-700 border border-gray-500 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
-                               required>
+                               >
                     </div>
                 </div>
             </div>

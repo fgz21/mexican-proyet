@@ -199,7 +199,7 @@ class ConstanciaPDF(FPDF):
 
         self.set_fill_color(220, 220, 220)
         self.set_font('Arial', 'B', 10)
-        
+        self.cell(0, 6, 'Datos de Identificación del Contribuyente:', 'LTR', 1, 'L', 1)
 
 
 
@@ -380,35 +380,37 @@ def generar_constancia():
     if 'username' not in session:
         return redirect(url_for('login'))
 
+    
 
+    rfc = request.form.get('rfc', '').strip().upper()
+    idcif = request.form.get('id_cif', '').strip()
+
+    
+    if not rfc or not id_cif:
+        return "RFC y ID CIF son requeridos", 400 
+
+     # Obtener datos del SAT
+    sat_data = scrape_sat_data(rfc, id_cif) 
+    
+    if not sat_data:
+        return "No se pudieron obtener los datos del SAT", 400
+
+    fecha_inicio = request.form.get('fecha_inicio', '')
+    fecha_formateada = "FECHA NO ESPECIFICADA"
+    fecha_nacimiento = request.form.get('fecha_nacimiento', 'NO ESPECIFICADA')
+
+    if fecha_inicio:
+        try:
+            fecha_formateada = datetime.strptime(fecha_inicio, '%Y-%m-%d').strftime("%d DE %B DE %Y").upper()
+        except ValueError:
+            pass
 
     datos = {
-        'rfc': 'XAXX010101000',
-        'idcif': '1234567890',
-        'nombre': 'JUAN',
-        'primer_apellido': 'PEREZ',
-        'segundo_apellido': 'LOPEZ',
-        'nombre_comercial': 'TIENDITA JUAN',
-        'curp': 'PELJ800101HDFLPN01',
-        'fecha_nacimiento': '01/01/1980',
-        'fecha_inicio': '2020-01-01',
-        'fecha_formateada': '01 DE ENERO DE 2020',
-        'fecha_cambio_situacion': '01/01/2020',
-        'situacion_contribuyente': 'ACTIVO',
-        'lugar_emision': 'CIUDAD DE MÉXICO',
-        'actividad': 'COMERCIO AL POR MENOR',
-        'porcentaje': '100',
-        'regimen': 'RÉGIMEN GENERAL DE LEY',
-        'codigo_postal': '01000',
-        'tipo_vialidad': 'CALLE',
-        'nombre_vialidad': 'REVOLUCIÓN',
-        'numero_exterior': '123',
-        'numero_interior': 'A',
-        'colonia': 'CENTRO',
-        'localidad': 'CIUDAD DE MÉXICO',
-        'municipio': 'CUAUHTÉMOC',
-        'entidad_federativa': 'CIUDAD DE MÉXICO',
-        'entre_calle': 'INDEPENDENCIA Y HIDALGO'
+        **sat_data,
+        'lugar_emision': request.form.get('lugar_emision', ''),
+        'actividad': request.form.get('actividad', ''),
+        'porcentaje': request.form.get('porcentaje', '0'),
+        'fecha_inicio': request.form.get('fecha_inicio', '')
     }
 
     pdf = ConstanciaPDF()
@@ -424,7 +426,7 @@ def generar_constancia():
     with open(pdf_path, 'rb') as f:
         response = make_response(f.read())
     response.headers['Content-Type'] = 'application/pdf'
-    response.headers['Content-Disposition'] = f'attachment; filename=constancia_{''}.pdf'
+    response.headers['Content-Disposition'] = f'attachment; filename=constancia_{rfc}.pdf'
 
     return response
 
